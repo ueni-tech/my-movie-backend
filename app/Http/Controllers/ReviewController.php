@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -32,9 +33,25 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        //
+        $validatedData = $request->validate([
+            'review' => 'required | string',
+            'rating' => 'required | integer',
+            'media_id' => 'required | integer',
+            'media_type' => 'required | string',
+        ]);
+
+        $review = new Review();
+        $review->content = $validatedData['review'];
+        $review->rating = $validatedData['rating'];
+        $review->media_id = $validatedData['media_id'];
+        $review->media_type = $validatedData['media_type'];
+        $review->user_id = Auth::id();
+        $review->save();
+
+        $review->load('user');
+        return response()->json($review);
     }
 
     /**
