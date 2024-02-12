@@ -31,7 +31,11 @@ class ReviewController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 新規レビューを登録
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -79,10 +83,14 @@ class ReviewController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 指定されたレビューを削除
+     * 
+     * @param Review $review
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Review $review)
     {
-        //
+        $review->delete();
+        return response()->json(['message' => '正常にレビューを削除しました。']);
     }
 }
