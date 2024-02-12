@@ -59,11 +59,15 @@ class ReviewController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 指定のレビューを取得
+     * 
+     * @param Review $review
      */
     public function show(Review $review)
     {
-        //
+        $review->load('user', 'comments.user');
+
+        return response()->json($review);
     }
 
     /**

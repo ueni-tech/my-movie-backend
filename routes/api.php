@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReviewController;
 use App\Models\Review;
 use Illuminate\Http\Request;
@@ -21,6 +22,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::get('/reviews/{media_type}/{media_id}', [ReviewController::class, 'index']);
+Route::get('/review/{review}', [ReviewController::class, 'show']);
 Route::post('/reviews', [ReviewController::class, 'store']);
 Route::put('/review/{review}', [ReviewController::class, 'update']);
 Route::delete('/review/{review}', [ReviewController::class, 'destroy']);
+
+Route::post('/comments', [CommentController::class, 'store']);
