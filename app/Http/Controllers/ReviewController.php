@@ -75,11 +75,25 @@ class ReviewController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 指定されたレビューを更新
+     * 
+     * @param Request $request
+     * @param Review $review
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request, Review $review): \Illuminate\Http\JsonResponse
     {
-        //
+        $validatedData = $request->validate([
+            'content' => 'required | string',
+            'rating' => 'required | integer',
+        ]);
+
+        $review->content = $validatedData['content'];
+        $review->rating = $validatedData['rating'];
+        $review->save();
+
+        return response()->json($review);
     }
 
     /**
