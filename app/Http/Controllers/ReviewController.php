@@ -40,14 +40,14 @@ class ReviewController extends Controller
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $validatedData = $request->validate([
-            'review' => 'required | string',
+            'content' => 'required | string',
             'rating' => 'required | integer',
             'media_id' => 'required | integer',
             'media_type' => 'required | string',
         ]);
 
         $review = new Review();
-        $review->content = $validatedData['review'];
+        $review->content = $validatedData['content'];
         $review->rating = $validatedData['rating'];
         $review->media_id = $validatedData['media_id'];
         $review->media_type = $validatedData['media_type'];
